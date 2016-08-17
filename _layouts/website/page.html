@@ -19,9 +19,7 @@
     <header class="gb-page-header">
         <div class="container">
         {% block header %}
-            <a href="//www.ksyun.com" class="logo">
-                <img src="//fe.ksyun.com/web/logo.png" class="logo-img">
-            </a>
+            <a href="//www.ksyun.com" class="logo">金山云</a>
        {% endblock %}
         </div>
     </header>
@@ -37,6 +35,7 @@
                         {% block search_results %}
                             {% block page %}
                             <div class="gb-markdown book-page-inner">
+                                <div class="crumbs-inner"><div class="crumbs"><a href="//docs.ksyun.com">文档中心</a></div><a class="pdflink">下载PDF文档</a></div>
                                 {{ page.content|safe }}
                             </div>
                             {% endblock %}

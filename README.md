@@ -1,4 +1,4 @@
-# GitBook Official Theme
+# ksyun docs theme 
 
-Offical theme for GitBook owned books. The style is using [styleguide](http://styleguide.gitbook.com).
+[ksyun docs](http://docs.ksyun.com).
 
