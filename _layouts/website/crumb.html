@@ -1,0 +1,14 @@
+{% macro articles(_articles) %}
+    {% for article in _articles %}
+            {{ article.title }} 
+        {% if article.articles.length > 0 and page.level.indexOf(article.level) == 0 %}
+            {{ articles(article.articles) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% block book_summary %}
+    {% for part in summary.parts %}
+        <div class="crumbs-inner"><div class="crumbs"><a href="//docs.ksyun.com">文档中心</a> {{ articles(part.articles) }}</div><a class="pdflink">下载PDF文档</a></div
+    {% endfor %}
+{% endblock %}

@@ -4,3 +4,95 @@
     right: 20px;
     font-size: 12px;
 }
+
+.panel {
+    border: 0 none;
+}
+
+.gb-markdown ol, .gb-markdown ul {
+    margin-left: -8px;
+}
+
+.gb-markdown img {
+    display: block;
+}
+
+.list-group .list-group-item {
+    background-color: #f5f6f7;
+    padding: 0;
+    margin-bottom: 0;
+    border: 0;
+    > a {
+        font-size: 14px;
+        height: 40px;
+        display: block;
+        line-height: 40px;
+        padding: 0 15px;
+    }
+    &.active {
+        background-color: transparent;
+        border-left: 0 none !important;
+        color: #333;
+        font-weight: normal;
+        padding-left: 0;
+        > a {
+            background-color: #fff;
+            border-left: 2px solid #fe4444 !important;
+            color: #fe4444;
+            font-weight: normal;
+        }
+    }
+    &.active-level {
+        > a {
+            background-color: #fff;
+            border-left: 2px solid #fe4444 !important;
+            color: #333;
+        }
+    }
+    i.octicon {
+        float: right;
+    }
+    .articles {
+        a {
+            color: #333;
+            font-size: 12px;
+            height: 36px;
+            line-height: 36px;
+            padding-left: 24px;
+            &.active {
+                background-color: transparent;
+                border: 0 none !important;
+                color: #fe4444;
+            }
+        }
+    }
+}
+
+.secNav {
+    ~ .list-group-item {
+        padding-left: 24px;
+        &.active {
+            padding-left: 22px;
+        }
+    }
+    ~ .secNav {
+        padding-left: 15px;
+        &.active {
+            padding-left: 13px;
+        }
+    }
+}
+
+.gb-markdown {
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+}
+
+.gb-markdown table th {
+    background-color: #f5f6f7;
+}

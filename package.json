@@ -1,7 +1,7 @@
 {
-    "name": "gitbook-plugin-kscdocs",
+    "name": "gitbook-plugin-ksyun-docs",
     "description": "ksyun docs",
-    "version": "1.0.5",
+    "version": "1.0.0",
     "engines": {
         "gitbook": ">=3.0.0-pre.8"
     },

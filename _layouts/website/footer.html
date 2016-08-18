@@ -115,6 +115,29 @@
 </div>
 
 <script>
+    // matches polyfill
+    this.Element && function(ElementPrototype) {
+        ElementPrototype.matches = ElementPrototype.matches ||
+        ElementPrototype.matchesSelector ||
+        ElementPrototype.webkitMatchesSelector ||
+        ElementPrototype.msMatchesSelector ||
+        function(selector) {
+            var node = this, nodes = (node.parentNode || node.document).querySelectorAll(selector), i = -1;
+            while (nodes[++i] && nodes[i] != node);
+            return !!nodes[i];
+        }
+    }(Element.prototype);
+
+    // closest polyfill
+    this.Element && function(ElementPrototype) {
+        ElementPrototype.closest = ElementPrototype.closest ||
+        function(selector) {
+            var el = this;
+            while (el.matches && !el.matches(selector)) el = el.parentNode;
+            return el.matches ? el : null;
+        }
+    }(Element.prototype);
+
     function addClass(obj, cls) {
         var obj_class = obj.className; //获取 class 内容.
         var blank = (obj_class != '') ? ' ' : ''; //判断获取到的 class 是否为空, 如果不为空在前面加个'空格'.
@@ -156,5 +179,56 @@
             addClass(obj[1], "current");
             removeClass(obj[0], "current");
         }
+    }
+
+
+    //var url = location.href;
+
+    var url = location.href;
+    var md5Dir = url.split('/')[3];
+
+    var pdfLink = document.getElementsByClassName('pdflink');
+    pdfLink[0].setAttribute('href','/' + md5Dir + '/_book/' + md5Dir + '.pdf');
+    
+    var crumbs = document.getElementsByClassName('crumbs');
+    
+    var crumbsNodes = [];
+    var activeMenu = document.querySelector('.list-group .active');
+    if(activeMenu.matches('li')){
+        activeMenu = activeMenu.firstElementChild;
+    }
+    crumbsNodes.push({
+        text : activeMenu.textContent
+    })
+
+    findParent(activeMenu);
+
+    for (var i = crumbsNodes.length - 1; i >= 0; i--){
+        crumbs[0].appendChild(crumbsLinkCreate(crumbsNodes[i].url, crumbsNodes[i].text));
+    }
+
+    function findParent (node) {
+        var parent = node.closest('div.articles');  
+        parent.closest('li').setAttribute("class","list-group-item active-level");
+        if(parent){
+            crumbsNodes.push({
+                text : parent.closest('li').firstElementChild.textContent,
+                url : parent.closest('li').firstElementChild.getAttribute('href')
+            });
+        }
+    }
+    
+    function crumbsLinkCreate (url, text) {
+        var a;
+        if(url){
+            a = document.createElement('a');
+            a.setAttribute('href', url);
+        }else{
+            a = document.createElement('span');
+        }
+        var node = document.createTextNode('> ' + text);
+        a.appendChild(node);
+ 
+        return a;
     }
 </script>
