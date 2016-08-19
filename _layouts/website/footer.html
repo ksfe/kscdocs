@@ -118,25 +118,114 @@
     // matches polyfill
     this.Element && function(ElementPrototype) {
         ElementPrototype.matches = ElementPrototype.matches ||
-        ElementPrototype.matchesSelector ||
-        ElementPrototype.webkitMatchesSelector ||
-        ElementPrototype.msMatchesSelector ||
-        function(selector) {
-            var node = this, nodes = (node.parentNode || node.document).querySelectorAll(selector), i = -1;
-            while (nodes[++i] && nodes[i] != node);
-            return !!nodes[i];
-        }
+            ElementPrototype.matchesSelector ||
+            ElementPrototype.webkitMatchesSelector ||
+            ElementPrototype.msMatchesSelector ||
+            function(selector) {
+                var node = this,
+                    nodes = (node.parentNode || node.document).querySelectorAll(selector),
+                    i = -1;
+                while (nodes[++i] && nodes[i] != node);
+                return !!nodes[i];
+            }
     }(Element.prototype);
 
     // closest polyfill
     this.Element && function(ElementPrototype) {
         ElementPrototype.closest = ElementPrototype.closest ||
-        function(selector) {
-            var el = this;
-            while (el.matches && !el.matches(selector)) el = el.parentNode;
-            return el.matches ? el : null;
-        }
+            function(selector) {
+                var el = this;
+                while (el.matches && !el.matches(selector)) el = el.parentNode;
+                return el.matches ? el : null;
+            }
     }(Element.prototype);
+
+    function ajax(options) {
+        var defaultOptions = {
+            url: false, //ajax 请求地址
+            type: "GET",
+            data: false,
+            success: false, //数据成功返回后的回调方法
+            complete: false //ajax完成后的回调方法
+        };
+        for (i in defaultOptions) {
+            if (options[i] === undefined) {
+                options[i] = defaultOptions[i];
+            }
+        }
+
+        var xhr = new XMLHttpRequest();
+        //var xhr = new XDomainRequest();
+        var url = options.url;
+        var params = formatParams(options.data);
+        xhr.open(options.type, url);
+        // xhr.withCredentials = true;
+        xhr.onreadystatechange = onStateChange;
+        if (options.type === 'POST') {
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        xhr.send(params ? params : null);
+
+        function onStateChange() {
+            if (xhr.readyState == 4) {
+                var result,
+                    status = xhr.status;
+
+                if ((status >= 200 && status < 300) || status == 304) {
+                    result = xhr.responseText;
+                    ajaxSuccess(result, xhr)
+                } else {
+                    console.log("ERR", xhr.status);
+                }
+            }
+        }
+
+        function ajaxSuccess(data, xhr) {
+            var status = 'success';
+            data = JSON.parse(data);
+            options.success && options.success(data, options, status, xhr);
+            ajaxComplete(status)
+        }
+
+        function ajaxComplete(status) {
+            options.complete && options.complete(status);
+        }
+
+        function formatParams(data) {
+            var arr = [];
+            for (var name in data) {
+                arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
+            }
+            arr.push(("v=" + Math.random()).replace("."));
+            return arr.join("&");
+        }
+    };
+
+    var xajax = function(method, url, data, sucback, complete) { //此方法由于兼容ie时用的方法不一样,导致不同浏览器的结果不一致.使用时请知悉.
+        if (typeof XDomainRequest != 'undefined') {
+            var xdr = new XDomainRequest();
+            xdr.onload = function() {
+                sucback(JSON.parse(xdr.responseText));
+            };
+            // xdr.withCredentials = true;
+            xdr.open(method, url, true);
+            xdr.send(data);
+
+        } else if (XMLHttpRequest) {
+            var options = {
+                url: url,
+                type: method,
+                data: data,
+                success: sucback,
+                complete: complete
+            };
+            ajax(options);
+        } else {
+            console.log(new Error('CORS not supported'));
+        }
+    };
+
+
 
     function addClass(obj, cls) {
         var obj_class = obj.className; //获取 class 内容.
@@ -187,48 +276,71 @@
     var url = location.href;
     var md5Dir = url.split('/')[3];
 
-    var pdfLink = document.getElementsByClassName('pdflink');
-    pdfLink[0].setAttribute('href','/' + md5Dir + '/_book/' + md5Dir + '.pdf');
-    
-    var crumbs = document.getElementsByClassName('crumbs');
-    
-    var crumbsNodes = [];
-    var activeMenu = document.querySelector('.list-group .active');
-    if(activeMenu.matches('li')){
-        activeMenu = activeMenu.firstElementChild;
-    }
-    crumbsNodes.push({
-        text : activeMenu.textContent
+    xajax("get", "//doc.op.ksyun.com/names/getNames?name=" + md5Dir + "&t=" + ~~new Date(), null, function(data) {
+        console.log(data)
+
+        var title = data.name;
+        var pdflink = data.pdf;
+        var homeUrl = data.url;
+
+        function findParent(node) {
+            var parent = node.closest('div.articles');
+            if (parent) {
+                parent.closest('li').setAttribute("class", "list-group-item active-level");
+                crumbsNodes.push({
+                    text: parent.closest('li').firstElementChild.textContent,
+                    url: parent.closest('li').firstElementChild.getAttribute('href')
+                });
+            }
+        }
+
+        var panelTitle = document.getElementsByClassName('panel-title');
+        var titleTxtNode = document.createTextNode(title);
+        panelTitle[0].appendChild(titleTxtNode);
+
+        var pdfaLink = document.getElementsByClassName('pdflink');
+        pdfaLink[0].setAttribute('href', pdflink);
+
+        var crumbs = document.getElementsByClassName('crumbs');
+
+        var crumbsNodes = [];
+        var activeMenu = document.querySelector('.list-group .active');
+        if (activeMenu.matches('li')) {
+            activeMenu = activeMenu.firstElementChild;
+        }
+        crumbsNodes.push({
+            text: activeMenu.textContent
+        })
+
+        findParent(activeMenu);
+
+        crumbsNodes.push({
+            text: title,
+            url: homeUrl 
+        })
+
+        for (var i = crumbsNodes.length - 1; i >= 0; i--) {
+
+            var span = document.createElement('span');
+            var gt = document.createTextNode(' > ');
+            span.appendChild(gt);
+
+            crumbs[0].appendChild(span);
+            crumbs[0].appendChild(crumbsLinkCreate(crumbsNodes[i].url, crumbsNodes[i].text));
+        }
     })
 
-    findParent(activeMenu);
-
-    for (var i = crumbsNodes.length - 1; i >= 0; i--){
-        crumbs[0].appendChild(crumbsLinkCreate(crumbsNodes[i].url, crumbsNodes[i].text));
-    }
-
-    function findParent (node) {
-        var parent = node.closest('div.articles');  
-        if(parent){
-            parent.closest('li').setAttribute("class","list-group-item active-level");
-            crumbsNodes.push({
-                text : parent.closest('li').firstElementChild.textContent,
-                url : parent.closest('li').firstElementChild.getAttribute('href')
-            });
-        }
-    }
-    
-    function crumbsLinkCreate (url, text) {
+    function crumbsLinkCreate(url, text) {
         var a;
-        if(url){
+        if (url) {
             a = document.createElement('a');
             a.setAttribute('href', url);
-        }else{
+        } else {
             a = document.createElement('span');
         }
-        var node = document.createTextNode('> ' + text);
+        var node = document.createTextNode(text);
         a.appendChild(node);
- 
+
         return a;
     }
 </script>
