@@ -24,4 +24,20 @@
     {% endfor %}
 {% endblock %}
 
+{% block javascript %}
+    {### Include table js ###}
+    <script rel="stylesheet" href="{{ "tablejs"|resolveAsset }}">
+
+    {{ super() }}
+
+    {### Custom javascript for the book ###}
+
+    {% for type, javascript in config.javascript %}
+        {% if fileExists(javascript) and type == "website" %}
+        <script scr="{{ jsFile|resolveAsset }}"></script>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
 {% block body %}{% endblock %}
