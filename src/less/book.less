@@ -1,5 +1,6 @@
-body,html {
-    font-family: "Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
+body,
+html {
+    font-family: "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .pdflink {
@@ -22,7 +23,9 @@ body,html {
     color: #333;
     border-bottom: 1px solid #dbe2e6;
 }
-.gb-markdown ol, .gb-markdown ul {
+
+.gb-markdown ol,
+.gb-markdown ul {
     margin-left: -8px;
 }
 
@@ -36,11 +39,12 @@ body,html {
     margin-bottom: 0;
     border: 0;
     > a {
+        border-left: 2px solid #f5f6f7;
         font-size: 14px;
         height: 40px;
         display: block;
         line-height: 40px;
-        padding: 0 12px 0 24px;
+        padding: 0 12px 0 22px;
     }
     &.active {
         background-color: transparent;
@@ -50,10 +54,9 @@ body,html {
         padding-left: 0;
         > a {
             background-color: #fff;
-            border-left: 2px solid #fe4444 !important;
+            border-left-color: #fe4444 !important;
             color: #fe4444;
             font-weight: normal;
-            padding-left: 22px;
         }
     }
     &.active-level {
@@ -98,7 +101,12 @@ body,html {
 }
 
 .gb-markdown {
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         margin-top: 20px;
         margin-bottom: 10px;
     }
@@ -106,13 +114,15 @@ body,html {
         font-size: 24px;
         margin-bottom: 30px;
     }
-    h2 , h3 {
+    h2,
+    h3 {
         font-size: 16px;
         margin-bottom: 12px;
     }
     p {
         margin-bottom: 30px;
-        + ol,  + ul {
+        + ol,
+        + ul {
             margin-top: -20px;
         }
     }
@@ -120,16 +130,29 @@ body,html {
         margin: 20px 0;
     }
 }
+
 .table-area {
     overflow-x: auto;
     margin-bottom: 15px;
 }
+
 .gb-markdown table {
     margin-bottom: 0;
 }
+
 .gb-markdown table th {
     background-color: #f5f6f7;
-    white-space: nowrap;    
+    white-space: nowrap;
 }
 
-
+.copy-code-button {
+    position: absolute;
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+    top: 12px;
+    right: 16px;
+    color: rgb(151, 151, 151);
+    cursor: pointer;
+}

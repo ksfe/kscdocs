@@ -55,16 +55,6 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
             $(this).css("position", "relative");
 
             var $copyCodeButton = $("<span class='copy-code-button'>复制代码</span>");
-            $copyCodeButton.css({
-                "position": "absolute",
-                "display": "inline-block",
-                "height": "24px",
-                "line-height": "24px",
-                "font-size": "12px",
-                "top": "12px",
-                "right": "16px",
-                "color": "#979797"
-            });
             $copyCodeButton.click(function() {
                 var $codeContainer = $(this).siblings("code");
                 if ($codeContainer) {
