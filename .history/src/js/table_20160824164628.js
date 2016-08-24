@@ -1,0 +1,8 @@
+//表格动态增加父级div，表头不换行
+    [].slice.call(document.querySelectorAll('table')).forEach(function(el) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'table-area';
+        el.parentNode.insertBefore(wrapper, el);
+        el.parentNode.removeChild(el);
+        wrapper.appendChild(el);
+    })
