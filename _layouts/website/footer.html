@@ -299,6 +299,10 @@
         pdfaLink[0].setAttribute('href', pdflink);
 
         var crumbs = document.getElementsByClassName('crumbs');
+        var indexUrl = document.getElementsByClassName('homeurl');
+        if(homeUrl){
+            indexUrl[0].setAttribute('href', homeUrl);
+        }
 
         var crumbsNodes = [];
         var activeMenu = document.querySelector('.list-group .active');
