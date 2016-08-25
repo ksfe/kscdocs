@@ -80,5 +80,7 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
 
             $(this).append($copyCodeButton);
         });
+
+        // $("li[data-level='1.1'] > a").attr('href','./index.html');
     });
 });

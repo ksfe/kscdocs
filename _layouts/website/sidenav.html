@@ -1,40 +1,9 @@
-<!--{% macro articles(_articles) %}
-    {% for article in _articles %}
-        {% if article.path %}
-        <a href="{{ article.path|resolveFile }}{{ article.anchor }}" class="list-group-item{% if article.path == file.path and not article.anchor %} active{% endif %}{% if article.articles.length > 0 %} secNav{% endif %}" data-level="{{ article.level }}">
-        {% elif article.url %}
-        <a href="{{ article.url }}" target="_blank" class="list-group-item">
-        {% else %}
-        <span class="list-group-item">
-        {% endif %}
-
-            {{ article.title }}
-
-            {% for i in range(0, article.depth - 1) %}
-            <i class="octicon octicon-chevron-down" style="opacity: 0"></i>
-            {% endfor %}
-
-            {% if article.articles.length > 0 and page.level.indexOf(article.level) == 0 %}
-            <i class="octicon octicon-chevron-up"></i>
-            {% elif article.articles.length > 0 %}
-            <i class="octicon octicon-chevron-down"></i>
-            {% endif %}
-
-        {% if article.path or article.url %}
-        </a>
-        {% else %}
-        </span>
-        {% endif %}
-
-    {% endfor %}
-{% endmacro %}-->
-
-
-
 {% macro articles(_articles) %}
     {% for article in _articles %}
         <li class="list-group-item {% if article.path == file.path and not article.anchor %}active{% endif %}" data-level="{{ article.level }}" {% if article.path %}data-path="{{ article.path|resolveFile }}"{% endif %}>
-            {% if article.path and getPageByPath(article.path) %}
+            {% if article.level == '1.1' %}
+                <a href="{{ article.url }}/index.html">
+            {% elif article.path and getPageByPath(article.path) %}
                 <a href="{{ article.path|resolveFile }}{{ article.anchor }}">
             {% elif article.url %}
                 <a target="_blank" href="{{ article.url }}">
