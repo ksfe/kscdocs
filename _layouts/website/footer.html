@@ -283,7 +283,7 @@
         function findParent(node) {
             var parent = node.closest('div.articles');
             if (parent) {
-                parent.closest('li').setAttribute("class", "list-group-item active-level");
+                // parent.closest('li').setAttribute("class", "list-group-item active-level");
                 crumbsNodes.push({
                     text: parent.closest('li').firstElementChild.textContent,
                     url: parent.closest('li').firstElementChild.getAttribute('href')

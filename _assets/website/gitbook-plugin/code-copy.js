@@ -81,6 +81,13 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
             $(this).append($copyCodeButton);
         });
 
-        // $("li[data-level='1.1'] > a").attr('href','./index.html');
+        $(".secNavLink").click(function(){
+            $(this).removeAttr('href');
+            $('.list-group-item').removeClass('active');
+            $('.list-group-item').removeClass('active-level');
+            $('.list-group-item .articles').removeAttr('style');
+            $(this).parent('.list-group-item').addClass('active');
+            return false;
+        });
     });
 });

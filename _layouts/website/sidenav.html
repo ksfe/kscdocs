@@ -33,9 +33,9 @@
 
 {% macro articles(_articles) %}
     {% for article in _articles %}
-        <li class="list-group-item {% if article.path == file.path and not article.anchor %}active{% endif %}" data-level="{{ article.level }}" {% if article.path %}data-path="{{ article.path|resolveFile }}"{% endif %}>
+        <li class="list-group-item {% if article.path == file.path and not article.anchor %}active{% elif article.articles.length > 0 and page.level.indexOf(article.level) == 0 %}active-level{% endif %}">
             {% if article.path and getPageByPath(article.path) %}
-                <a href="{{ article.path|resolveFile }}{{ article.anchor }}" class="{% if article.level == '1.1' %}homeurl{% endif %}">
+                <a href="{{ article.path|resolveFile }}{{ article.anchor }}" class="{% if article.level == '1.1' %}homeurl {% elif article.articles.length > 0 %}secNavLink{% endif %}">
             {% elif article.url %}
                 <a target="_blank" href="{{ article.url }}">
             {% else %}
@@ -65,8 +65,8 @@
                 </span>
             {% endif %}
 
-            {% if article.articles.length > 0 and page.level.indexOf(article.level) == 0 %}
-            <div class="articles">
+            {% if article.articles.length > 0 %}
+            <div class="articles" {% if article.articles.length > 0 and page.level.indexOf(article.level) == 0 %} style="display:block"{% endif %}>
                 {{ articles(article.articles, file, config) }}
             </div>
             {% endif %}
