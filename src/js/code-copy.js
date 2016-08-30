@@ -81,12 +81,14 @@ require(["gitbook", "jQuery"], function(gitbook, $) {
             $(this).append($copyCodeButton);
         });
 
+        $(".secNavLink").removeAttr('href');
         $(".secNavLink").click(function(){
-            $(this).removeAttr('href');
             $('.list-group-item').removeClass('active');
             $('.list-group-item').removeClass('active-level');
             $('.list-group-item .articles').removeAttr('style');
             $(this).parent('.list-group-item').addClass('active');
+            $('.arrow').removeClass('arrow-up').addClass('arrow-down');
+            $(this).find('.arrow').removeClass('arrow-down').addClass('arrow-up');
             return false;
         });
     });

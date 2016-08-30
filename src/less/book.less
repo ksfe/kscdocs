@@ -66,9 +66,6 @@ html {
             color: #333;
         }
     }
-    i.octicon {
-        float: right;
-    }
     .articles {
         a {
             color: #333;
@@ -162,4 +159,55 @@ html {
 }
 .list-group-item.active .articles , .list-group-item.active-level .articles {
     display: block;
+}
+
+.arrow {
+    display: inline-block;
+    float: right;
+    border-style: dashed dashed solid dashed;
+    border-color: transparent transparent #555 transparent;
+    border-width: 6px;
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-top: 10px;
+    &:after {
+        content: '';
+        display: inline-block;
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent #f5f6f7 transparent;
+        border-width: 6px;
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: -6px;
+        top: -4px;
+    }
+    &.arrow-down {
+        border-style:solid dashed dashed dashed;
+        border-color:#555 transparent transparent transparent;
+        margin-top: 16px;
+        &:after {
+            border-color: #f5f6f7 transparent transparent transparent;
+            top: -8px;
+        }
+    }
+}
+.list-group-item {
+    &.active {
+        .arrow-up {
+            border-color: transparent transparent #fe4444 transparent;
+            &:after {
+                border-color: transparent transparent white transparent;
+            }
+        }
+    }
+    &.active-level {
+        .arrow-up {
+            border-color: transparent transparent #555 transparent;
+            &:after {
+                border-color: transparent transparent white transparent;
+            }
+        }
+    }
 }
