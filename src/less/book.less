@@ -24,13 +24,52 @@ html {
     border-bottom: 1px solid #dbe2e6;
 }
 
-.gb-markdown ol,
-.gb-markdown ul {
-    margin-left: -8px;
-}
+.gb-markdown {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    h1 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+    h2,
+    h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+    p {
+        margin-bottom: 30px;
+        + ol,
+        + ul {
+            margin-top: -20px;
+        }
+    }
+    ul,ol {
+        margin-left: -8px;
+    }
+    pre {
+        padding-top: 34px;
+    }
 
-.gb-markdown img {
-    display: block;
+    table {
+        margin-bottom: 0;
+        th {
+            background-color: #f5f6f7;
+            white-space: nowrap;
+        }
+    }
+
+    img {
+        display: block;
+        margin: 20px 0;
+    }
+
 }
 
 .list-group .list-group-item {
@@ -97,49 +136,9 @@ html {
     }
 }
 
-.gb-markdown {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
-    h1 {
-        font-size: 24px;
-        margin-bottom: 30px;
-    }
-    h2,
-    h3 {
-        font-size: 16px;
-        margin-bottom: 12px;
-    }
-    p {
-        margin-bottom: 30px;
-        + ol,
-        + ul {
-            margin-top: -20px;
-        }
-    }
-    img {
-        margin: 20px 0;
-    }
-}
-
 .table-area {
     overflow-x: auto;
     margin-bottom: 15px;
-}
-
-.gb-markdown table {
-    margin-bottom: 0;
-}
-
-.gb-markdown table th {
-    background-color: #f5f6f7;
-    white-space: nowrap;
 }
 
 .copy-code-button {
