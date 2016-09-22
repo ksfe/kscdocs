@@ -1,9 +1,9 @@
 {
     "name": "gitbook-plugin-ksyun-docs",
     "description": "ksyun docs",
-    "version": "1.1.5",
+    "version": "1.2.0",
     "engines": {
-        "gitbook": ">=3.0.0-pre.8"
+        "gitbook": ">=3.0.0"
     },
     "devDependencies": {
         "less": "2.6.0",

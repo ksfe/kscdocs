@@ -276,9 +276,11 @@
 
     xajax("get", "//read.doc.ksyun.com/names/getNames?name=" + md5Dir + "&t=" + ~~new Date(), null, function(data) {
 
-        var title = data.name;
+        var title = data.name || 'test';
         var pdflink = data.pdf;
-        var homeUrl = data.url;
+        var homeUrl = data.url || '/index.html';
+        var docParentUrl = data.parent_url;
+        var docParentName = data.parent_name || 'test2';
 
         function findParent(node) {
             var parent = node.closest('div.articles');
@@ -294,6 +296,11 @@
         var panelTitle = document.getElementsByClassName('panel-title');
         var titleTxtNode = document.createTextNode(title);
         panelTitle[0].appendChild(titleTxtNode);
+
+        var parentUrl = document.getElementsByClassName('crumbs-parent');
+        var parentTxtNode = document.createTextNode(docParentName);
+        parentUrl[0].appendChild(parentTxtNode);
+        parentUrl[0].setAttribute('href', docParentUrl);
 
         var pdfaLink = document.getElementsByClassName('pdflink');
         pdfaLink[0].setAttribute('href', pdflink);
