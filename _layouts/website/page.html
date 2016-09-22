@@ -36,7 +36,6 @@
                             {% block page %}
                             <div class="gb-markdown book-page-inner">
                                 <div class="crumbs-inner"><div class="crumbs">文档中心 &gt; <a class="crumbs-parent"></a> </div><a class="pdflink">下载PDF文档</a></div>
-                                {% include "website/crumb.html" %}
                                 {{ page.content|safe }}
                             </div>
                             {% endblock %}

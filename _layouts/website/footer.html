@@ -276,11 +276,11 @@
 
     xajax("get", "//read.doc.ksyun.com/names/getNames?name=" + md5Dir + "&t=" + ~~new Date(), null, function(data) {
 
-        var title = data.name || 'test';
+        var title = data.name;
         var pdflink = data.pdf;
-        var homeUrl = data.url || '/index.html';
+        var homeUrl = data.url;
         var docParentUrl = data.parent_url;
-        var docParentName = data.parent_name || 'test2';
+        var docParentName = data.parent_name;
 
         function findParent(node) {
             var parent = node.closest('div.articles');
