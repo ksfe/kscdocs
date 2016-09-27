@@ -39,7 +39,7 @@
             {% elif article.url %}
                 <a target="_blank" href="{{ article.url }}">
             {% else %}
-                <span>
+                <a href="{{ article.path|resolveFile }}{{ article.anchor }}" class="{% if article.level == '1.1' %}homeurl {% elif article.articles.length > 0 %}secNavLink{% endif %}">
             {% endif %}
 
             {{ article.title }}
@@ -53,7 +53,7 @@
             {% if article.path  or article.url %}
                 </a>
             {% else %}
-                </span>
+                </a>
             {% endif %}
 
             {% if article.articles.length > 0 %}
