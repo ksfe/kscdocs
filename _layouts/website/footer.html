@@ -274,7 +274,7 @@
     var url = location.href;
     var md5Dir = url.split('/')[3];
 
-    xajax("get", "//read.doc.ksyun.com/names/getNames?name=" + md5Dir + "&t=" + ~~new Date(), null, function(data) {
+    xajax("get", "//docs.ksyun.com/read/getNames?name=" + md5Dir + "&t=" + ~~new Date(), null, function(data) {
 
         var title = data.name;
         var pdflink = data.pdf;
